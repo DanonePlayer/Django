@@ -23,7 +23,7 @@ from django.http import HttpResponse
 # HTTP REQUEST
 
 def myview(request):
-    return HttpResponse("sas")
+    return HttpResponse("Home")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
