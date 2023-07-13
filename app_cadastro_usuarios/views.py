@@ -5,4 +5,4 @@ from django.shortcuts import render
 
 
 def home(request):
-    return render(request, "app_cadastro_usuario/home.html")
+    return render(request, "app_cadastro_usuario/home.html", context={"name": "carlos",})
