@@ -1,5 +1,5 @@
 from django.urls import path
-from recipes.views import home
+from recipes import views
 
 # HTTP REQUEST <- HTTP RESPONSE
 
@@ -8,5 +8,6 @@ from recipes.views import home
 
 
 urlpatterns = [
-    path("", home),
+    path("", views.home),
+    path("/receitas/<int:id>/", views.recipe),
 ]
