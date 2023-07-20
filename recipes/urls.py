@@ -12,6 +12,6 @@ app_name = 'recipes'
 
 
 urlpatterns = [
-    path("", views.home, name="home"),
+    path("/", views.home, name="home"),
     path("/receitas/<int:id>/", views.recipe, name="recipe"),
 ]
