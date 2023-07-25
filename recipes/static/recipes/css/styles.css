@@ -200,6 +200,10 @@ text-decoration: none;
 color: var(--color-primary-dark);
 }
 
+.fas-author{
+    padding-right: 0.2rem;
+}
+
 .recipe-meta-container{
 display: flex;
 flex-flow: row wrap;
