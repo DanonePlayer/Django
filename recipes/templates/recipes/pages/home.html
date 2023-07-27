@@ -9,7 +9,9 @@
   {% for recipe in recipes %}
 
     {% include "recipes/partials/catalogos_recipe.html" %}
-
+    
+    {% empty %}
+      <H1>Sem Receitas no momento</H1>  
   {% endfor %}
   
 </div>
