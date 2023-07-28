@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 
-class Category(models.Model):
+class Category(models.Model):                # noqa: 302
     name = models.CharField(max_length=65)
 
     def __str__(self):
@@ -24,23 +24,8 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
     caver = models.ImageField(upload_to='recipes/covers/%Y/%m/%d/')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, default=None)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, default=None)   # noqa: E501
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)         # noqa: E501
 
     def __str__(self):
-        return self.title
-
-
-    
-
-# EDITED
-# title description slug
-# preparation_time preparation_time_unit
-# servings servings_unit
-# preparation_step
-# preparation_step_is_html
-# created_at updated_at
-# is_published
-# cover
-# category (Relação)
-# Author (Relação)
+        return self.title           # noqa: 292
