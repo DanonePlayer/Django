@@ -2,9 +2,9 @@
     <div class="recipe-cover">
         {% if is_detail_page != True %}
             <a href="{% url 'recipes:recipe' recipe.id %}">
-                <img src="{{ recipe.caver.url}}" alt="temporario">
+                <img src="{{ recipe.cover.url}}" alt="temporario">
             </a>
-        {% else %}<img src="{{ recipe.caver.url}}" alt="temporario">
+        {% else %}<img src="{{ recipe.cover.url}}" alt="temporario">
         {% endif %}
     </div>
     <div class="recipe-title-container">

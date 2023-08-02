@@ -1,12 +1,16 @@
 from django.urls import path
-from app_cadastro_usuarios.views import home
+
+from recipes import views as viewrecipe
+
+from . import views
 
 # HTTP REQUEST <- HTTP RESPONSE
 
 # HTTP REQUEST
 
-
+app_name = "cadastro"
 
 urlpatterns = [
-    path("", home),
+    path("", views.home, name="home"),
+    path("recipes/", viewrecipe.home, name="recipe"),
 ]
