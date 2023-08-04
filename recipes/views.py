@@ -28,17 +28,17 @@ def recipe(request, id):
     })
 
 def search(request):
-    search_term = request.GET.get("q").strip()
+    search_term = request.GET.get("q", "").strip()
 
     if not search_term:
         raise Http404()
     
     recipes = Recipe.objects.filter(
         Q(
-            Q(title__icontains=search_term) | 
+            Q(title__icontains=search_term) |
             Q(description__icontains=search_term) |
             Q(category__name__icontains=search_term)
-        ), 
+        ),
         is_published= True
     ).order_by("-id")
     
