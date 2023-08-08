@@ -172,8 +172,8 @@ padding-bottom: 2rem;
 }
 
 .recipe-title-container a{
-    text-decoration: none;
-    color: var(--color-gray-7);
+text-decoration: none;
+color: var(--color-gray-7);
 }
 
 .recipe-author{
@@ -201,7 +201,7 @@ color: var(--color-primary-dark);
 }
 
 .fas-author{
-    padding-right: 0.2rem;
+padding-right: 0.2rem;
 }
 
 .recipe-meta-container{
@@ -253,7 +253,7 @@ box-shadow: -5px 5px 10px rgb(0, 0, 0, .2);
 }
 
 .preparation-steps{
-    padding: var(--spacing-gutter-medium);
+padding: var(--spacing-gutter-medium);
 }
 
 .main-footer{
@@ -290,6 +290,27 @@ margin: 2rem;
 
 .preparation-steps ol,
 .preparation-steps ul{
-    margin: 2rem;
-    padding: 0 3rem;
+margin: 2rem;
+padding: 0 3rem;
+}
+
+.pagination-content{
+display: flex;
+flex-flow: row wrap;
+gap: 1rem 0.5rem;
+}
+.pagination .page-item{
+text-decoration: none;
+background: var(--color-gray-3);
+padding: 0.5rem 1rem;
+}
+
+.pagination .page-link{
+text-decoration: none;
+background: var(--color-primary);
+color: var(--color-white);
+}
+
+.pagination .page-current{
+background: var(--color-primary-dark);
 }
