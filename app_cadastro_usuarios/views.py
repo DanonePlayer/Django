@@ -1,7 +1,24 @@
-from django.shortcuts import render
+from django.http import Http404
+from django.shortcuts import redirect, render
 
-# Create your views here.
+from app_cadastro_usuarios.forms import RegisterForm
 
 
 def login(request):
-    return render(request, "app_cadastro_usuario/pages/login.html", context={"name": "carlos",})
+    register_form_data = request.session.get("register_form_data", None)
+    form = RegisterForm(register_form_data)
+
+    return render(request, "app_cadastro_usuarios/pages/register.html", context={
+    "name": "carlos",
+    "form": form
+    })
+
+def register_create(request):
+    if not request.POST:
+        raise Http404()
+
+    POST = request.POST
+    request.session["register_form_data"] = POST
+    form = RegisterForm(POST)
+
+    return redirect("cadastro:login")
