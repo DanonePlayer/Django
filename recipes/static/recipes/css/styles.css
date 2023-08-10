@@ -335,8 +335,16 @@ grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 gap: calc(var(--spacing-gutter-medium)/2) var(--spacing-gutter-medium);
 }
 
+.form-content button{
+padding: 1rem 2rem;
+border: none;
+border-radius: var(--spacing-gutter-medium);
+background: var(--color-primary-dark);
+color: var(--color-white);
+}
+
 .form-content label, 
-.form-content .help-text
+.help-text,
 .errorlist{
 display: block;
 margin: .5rem 0;
@@ -406,7 +414,8 @@ text-align: center;
 }
 
 @media (max-width: 900px){
-    .main-content-list{
+    .main-content-list
+    .form-content-grid{
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
     .container{
