@@ -3,11 +3,11 @@
 {% block title %}Register{% endblock title %}
 
 {% block content %}
-<div><a class="start-recipe" href="{% url 'cadastro:recipe' %}"><H1>RECEITAS</H1></a></div>
-<div class="main-content container">
-  <form action="{% url 'cadastro:create' %}" method="POST">
+<div class="main-content-forms container">
+  <form action="{% url 'cadastro:create' %}" method="POST" class="formulario-cadastro">
     {% csrf_token %}
-
+    <div><a class="start-recipe" href="{% url 'cadastro:recipe' %}"><H1>RECEITAS</H1></a></div>
+    
     <div class="form-content form-content-grid">
       {% for field in form %}
         <div class="form-group">

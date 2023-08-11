@@ -316,6 +316,14 @@ background: var(--color-primary-dark);
 }
 
 /* Forms */
+
+.main-content-forms{
+border-radius: var(--spacing-gutter-medium);
+background-color: var(--color-primary-dark);
+max-width: 90rem;
+margin: var(--spacing-gutter-medium) auto;
+}
+
 .form-content{
 max-width: 64rem;
 margin: 0 auto;
@@ -339,7 +347,7 @@ gap: calc(var(--spacing-gutter-medium)/2) var(--spacing-gutter-medium);
 padding: 1rem 2rem;
 border: none;
 border-radius: var(--spacing-gutter-medium);
-background: var(--color-primary-dark);
+background: var(--color-success-dark);
 color: var(--color-white);
 }
 
@@ -350,6 +358,10 @@ display: block;
 margin: .5rem 0;
 font-size: 1.4rem;
 list-style-type: none;
+}
+
+.formulario-cadastro{
+color: var(--color-white);
 }
 
 .errorlist{
