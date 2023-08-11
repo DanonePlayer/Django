@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from app_cadastro_usuarios.forms import RegisterForm
 
 
-def login(request):
+def register(request):
     register_form_data = request.session.get("register_form_data", None)
     form = RegisterForm(register_form_data)
 
