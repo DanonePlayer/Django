@@ -29,4 +29,4 @@ def register_create(request):
         messages.success(request, "PARABENS OLOROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
         del(request.session["register_form_data"])
 
-    return redirect("cadastro:login")
+    return redirect("cadastro:register")
