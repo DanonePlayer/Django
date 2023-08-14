@@ -6,6 +6,12 @@
 
 <div class="main-content-forms container">
   <form action="{% url 'cadastro:create' %}" method="POST" class="formulario-cadastro">
+    <div class="form-content icon center">
+      <h1>
+        <i class="fa-sharp fa-solid fa-address-card"></i>
+        <span>Register</span>
+      </h1>
+    </div>
     {% csrf_token %}
     
     <div class="form-content form-content-grid">
@@ -26,11 +32,11 @@
     <div class="form-content form-content-grid">
       <div class="form-group">
         {% include "recipes/partials/messages.html" %}
-      {% if form.errors %}
-        <div class="message message-error">
-          Por favor corrija os erros no formulário
-        </div>
-      {% endif %}
+        {% comment %} {% if form.errors %}
+          <div class="message message-error">
+            Por favor corrija os erros no formulário
+          </div>
+        {% endif %} {% endcomment %}
       </div>
     </div>    
     

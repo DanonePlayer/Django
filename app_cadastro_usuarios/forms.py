@@ -55,7 +55,7 @@ class RegisterForm(forms.ModelForm):
         }
         help_texts = {#frases de ajuda a baixo do label
             "email": "O e-mail digitado deve ser válido.",
-            "username": "Obrigatório. 8 caracteres ou mais. Letras, números e @/./+/-/_ apenas.",
+            "username": "Obrigatório. 8 caracteres ou mais, contendo letras, números e @/./+/-/_ apenas.",
         }
         error_messages = {#frases de erros
             "username":{
@@ -74,27 +74,28 @@ class RegisterForm(forms.ModelForm):
             }),
         }
     
-    # def clean_password(self):#validaespecifico do campo
-    #     data = self.cleaned_data.get("password")
+    def clean_username(self):#validaespecifico do campo
+        regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
+        username = self.cleaned_data.get("username")
 
-    #     if"atencion" in data:
-    #         raise ValidationError(
-    #             "DIGITO ERRADO",
-    #             code="invalid",
-                
-    #         )
-
-    #     print(data)
-
-    #     return data
+        if not regex.match(username):
+            raise ValidationError("Seu user contem menos de 8 caracteres", code="invalid")
+        return username
     
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        users = User.objects.filter(email=email).exists()
+        if users:
+            raise ValidationError("Este email ja existe", code="invalid")
+        return email
+
     def clean(self):#valida todo o formulario
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
         regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
         password2 = cleaned_data.get("password2")
         first_name = cleaned_data.get("first_name")
-        username = cleaned_data.get("username")
+
 
         if first_name in password:
             raise ValidationError({
@@ -112,9 +113,3 @@ class RegisterForm(forms.ModelForm):
             raise ValidationError({
                 "password": "Sua senha contem menos de 8 caracteres"
             })
-        
-        if not regex.match(username):
-            raise ValidationError({
-                "username": "Seu user contem menos de 8 caracteres"
-            })
-

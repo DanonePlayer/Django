@@ -23,10 +23,12 @@ def register_create(request):
     form = RegisterForm(POST)
 
     if form.is_valid():
-        data = form.save(commit=False)
-        print(data)
-        form.save()
-        messages.success(request, "PARABENS OLOROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        user = form.save(commit=False)
+        user.set_password(user.password)
+        user.save()
+        messages.success(request, "Cadastro Realizado com sucesso")
         del(request.session["register_form_data"])
+    else:
+        messages.error(request, "Por favor corrija os erros no formulário")
 
     return redirect("cadastro:register")
