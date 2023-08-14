@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from app_cadastro_usuarios.forms import RegisterForm
 
@@ -11,7 +12,8 @@ def register(request):
 
     return render(request, "app_cadastro_usuarios/pages/register.html", context={
     "name": "carlos",
-    "form": form
+    "form": form,
+    "form_action" : reverse("cadastro:create"),
     })
 
 def register_create(request):
