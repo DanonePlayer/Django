@@ -11,7 +11,9 @@ from . import views
 app_name = "cadastro"
 
 urlpatterns = [
-    path("", views.register, name="register"),
-    path("create/", views.register_create, name="create"),
+    path("", views.register_view, name="register"),
+    path("create/", views.register_create, name="register_create"),
     path("recipes/", viewrecipe.home, name="recipe"),
+    path("login/", views.login_view, name="login"),
+    path("login/create/", views.login_create, name="create_login"),
 ]

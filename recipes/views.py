@@ -3,6 +3,7 @@ import os
 from django.db.models import Q
 from django.http.response import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.urls import reverse
 
 from Utils.pagination import make_pagination
 
@@ -19,6 +20,7 @@ def home(request):
         "Type-Title": "Recipes",
         "recipes": page_obj, 
         "pagination_range": pagination_range,
+        "link": reverse("recipes:home"),
     }) 
 
 def category(request, category_id):
@@ -30,6 +32,7 @@ def category(request, category_id):
         "recipes": page_obj,
         "title": f'Category - {recipes[0].category.name}',
         "pagination_range": pagination_range,
+        "link": reverse("recipes:home"),
     })
 
 def recipe(request, id):
@@ -37,7 +40,9 @@ def recipe(request, id):
     return render(request, "recipes/pages/recipe-view.html", context={
         "recipe": recipe,
         "is_detail_page": True,
-        "title": f' {recipe.title}'
+        "title": f' {recipe.title}',
+        "link": reverse("recipes:home"),
+        "search": False,
     })
 
 # strip tira os espaços (+)
@@ -64,7 +69,8 @@ def search(request):
         "search_term" : search_term,
         "recipes" : page_obj,
         "pagination_range": pagination_range,
-        "additional_url_query": f"&q={search_term}"
+        "additional_url_query": f"&q={search_term}",
+        "link": reverse("recipes:home"),
     })
 
 

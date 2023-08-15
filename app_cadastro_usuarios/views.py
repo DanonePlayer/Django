@@ -3,17 +3,20 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from app_cadastro_usuarios.forms import RegisterForm
+from app_cadastro_usuarios.forms import LoginForm, RegisterForm
 
 
-def register(request):
+def register_view(request):
     register_form_data = request.session.get("register_form_data", None)
     form = RegisterForm(register_form_data)
 
     return render(request, "app_cadastro_usuarios/pages/register.html", context={
     "name": "carlos",
     "form": form,
-    "form_action" : reverse("cadastro:create"),
+    "form_action" : reverse("cadastro:register_create"),
+    "title_template": "Register",
+    "link": reverse("cadastro:register"),
+    "search": False,
     })
 
 def register_create(request):
@@ -34,3 +37,16 @@ def register_create(request):
         messages.error(request, "Por favor corrija os erros no formulário")
 
     return redirect("cadastro:register")
+
+def login_view(request):
+    form = LoginForm()
+    return render(request, "app_cadastro_usuarios/pages/login.html", context={
+    "form": form,
+    "title_template": "Login",
+    "link": reverse("cadastro:login"),
+    "search": False,
+    })
+
+def login_create(request):
+    return render(request, "app_cadastro_usuarios/pages/login.html", context={
+    })
