@@ -11,12 +11,12 @@ def register_view(request):
     form = RegisterForm(register_form_data)
 
     return render(request, "app_cadastro_usuarios/pages/register.html", context={
-    "name": "carlos",
     "form": form,
     "form_action" : reverse("cadastro:register_create"),
     "title_template": "Register",
     "link": reverse("cadastro:register"),
     "search": False,
+    "type_screen": "Register",
     })
 
 def register_create(request):
@@ -45,6 +45,7 @@ def login_view(request):
     "title_template": "Login",
     "link": reverse("cadastro:login"),
     "search": False,
+    "type_screen": "Login",
     })
 
 def login_create(request):
