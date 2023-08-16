@@ -38,8 +38,8 @@ class RegisterForm(forms.ModelForm):
         # exclude = ["first_name"]
         labels = { #nome dos campos acima do input
             "username": "Username",
-            "first_name": "First name",
-            "last_name": "Last name",
+            "first_name": "Primeiro Nome",
+            "last_name": "Ultimo Nome",
             "email": "Email",
             "password": "Password",
         }

@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -43,11 +44,25 @@ def login_view(request):
     return render(request, "app_cadastro_usuarios/pages/login.html", context={
     "form": form,
     "title_template": "Login",
+    "form_action": reverse("cadastro:login_create"),
     "link": reverse("cadastro:login"),
     "search": False,
     "type_screen": "Login",
     })
 
 def login_create(request):
-    return render(request, "app_cadastro_usuarios/pages/login.html", context={
-    })
+    if not request.POST:
+        raise Http404()
+    
+    form = LoginForm(request.POST)
+
+    if form.is_valid():
+        authenticated_user = authenticate(username=form.cleaned_data.get("username", ""), password=form.cleaned_data.get("password", ""))
+        if authenticated_user is not None:
+            messages.success(request, "Usuario logado")
+            login(request, authenticated_user)
+        else:
+            messages.error(request, "credenciais errado")
+    else:
+        messages.error(request, "username ou senha errados")
+    return redirect("cadastro:login")
