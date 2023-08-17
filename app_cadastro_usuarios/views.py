@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -33,7 +34,9 @@ def register_create(request):
         user.set_password(user.password)
         user.save()
         messages.success(request, "Cadastro Realizado com sucesso")
+
         del(request.session["register_form_data"])
+        return redirect(reverse("cadastro:login"))  
     else:
         messages.error(request, "Por favor corrija os erros no formulário")
 
@@ -66,3 +69,16 @@ def login_create(request):
     else:
         messages.error(request, "username ou senha errados")
     return redirect("cadastro:login")
+
+
+@login_required(login_url="cadastro:login", redirect_field_name="next")
+def logout_view(request):
+    if not request.POST:
+        return redirect(reverse("cadastro:login"))
+    
+    if request.POST.get("username") != request.user.username:
+        return redirect(reverse("cadastro:login"))
+
+    logout(request)
+    return redirect(reverse("cadastro:login"))
+    
