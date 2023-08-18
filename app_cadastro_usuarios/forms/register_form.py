@@ -86,11 +86,11 @@ class RegisterForm(forms.ModelForm):
         password2 = cleaned_data.get("password2")
         first_name = cleaned_data.get("first_name")
 
-
-        if first_name in password:
-            raise ValidationError({
-                "password": "Sua senha não pode ser igual ao seu nome",
-            })
+        if first_name is not None and password is not None:
+            if first_name in password:
+                raise ValidationError({
+                    "password": "Sua senha não pode ser igual ao seu nome",
+                })
 
         if password != password2:
             raise ValidationError({
