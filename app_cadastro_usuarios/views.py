@@ -65,9 +65,9 @@ def login_create(request):
             messages.success(request, "Usuario logado")
             login(request, authenticated_user)
         else:
-            messages.error(request, "credenciais errado")
+            messages.error(request, "username ou senha errado")
     else:
-        messages.error(request, "username ou senha errados")
+        messages.error(request, "username ou senha vazios")
     return redirect("cadastro:login")
 
 
@@ -82,3 +82,6 @@ def logout_view(request):
     logout(request)
     return redirect(reverse("cadastro:login"))
     
+@login_required(login_url="cadastro:login", redirect_field_name="next")
+def dashboard(request):
+    return render(request, "app_cadastro_usuarios/pages/dashboard.html")
