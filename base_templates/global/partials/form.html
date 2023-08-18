@@ -1,11 +1,13 @@
 <div class=" {% if type_screen == "Register" %} main-content-forms-register {% else %} main-content-forms-login {% endif %} container">
   <form action="{{ form_action }}" method="POST" class="formulario-cadastro">
+    {% if type_screen == "Register" or type_screen == "Login" %} 
     <div class="form-content icon center">
       <h1>
         <i class="fa-sharp fa-solid fa-address-card"></i>
         <span>{{title_template}}</span>
       </h1>
     </div>
+    {% endif %}
     {% csrf_token %}
     <div class="{% if type_screen == "Register" %} form-content-entry form-content-grid {% else %} form-entry {% endif %}">
       {% for field in form %}

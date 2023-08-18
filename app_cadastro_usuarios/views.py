@@ -5,12 +5,14 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from app_cadastro_usuarios.forms import LoginForm, RegisterForm
+from app_cadastro_usuarios.forms import (AuthorRecipeForm, LoginForm,
+                                         RegisterForm)
+from recipes.models import Recipe
 
 
 def register_view(request):
-    register_form_data = request.session.get("register_form_data", None)
-    form = RegisterForm(register_form_data)
+    Registro_digitado_pelo_usuario_POST = request.session.get("Registro_digitado_pelo_usuario_POST", None)
+    form = RegisterForm(Registro_digitado_pelo_usuario_POST)
 
     return render(request, "app_cadastro_usuarios/pages/register.html", context={
     "form": form,
@@ -26,16 +28,18 @@ def register_create(request):
         raise Http404()
 
     POST = request.POST
-    request.session["register_form_data"] = POST
+    request.session["Registro_digitado_pelo_usuario_POST"] = POST
     form = RegisterForm(POST)
+    print(POST)
 
+    #valida o formulario recebido pelo POST que foi guardado na session do navegador do usuario
     if form.is_valid():
         user = form.save(commit=False)
         user.set_password(user.password)
         user.save()
         messages.success(request, "Cadastro Realizado com sucesso")
 
-        del(request.session["register_form_data"])
+        del(request.session["Registro_digitado_pelo_usuario_POST"])
         return redirect(reverse("cadastro:login"))  
     else:
         messages.error(request, "Por favor corrija os erros no formulário")
@@ -68,7 +72,7 @@ def login_create(request):
             messages.error(request, "username ou senha errado")
     else:
         messages.error(request, "username ou senha vazios")
-    return redirect("cadastro:login")
+    return redirect("cadastro:dashboard")
 
 
 @login_required(login_url="cadastro:login", redirect_field_name="next")
@@ -84,4 +88,38 @@ def logout_view(request):
     
 @login_required(login_url="cadastro:login", redirect_field_name="next")
 def dashboard(request):
-    return render(request, "app_cadastro_usuarios/pages/dashboard.html")
+    recipes = Recipe.objects.filter(
+        is_published=False,
+        author=request.user,
+
+    )
+    return render(request, "app_cadastro_usuarios/pages/dashboard.html",  context={
+        "recipes": recipes,
+        "search": False,
+
+    })
+
+
+@login_required(login_url="cadastro:login", redirect_field_name="next")
+def dashboard_recipe_edit(request, id):
+    recipe = Recipe.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+
+    ).filter()
+
+    if not recipe:
+        raise Http404()
+    
+    form = AuthorRecipeForm(
+        request.POST or None,
+        instance=recipe
+    )
+
+    return render(request, "app_cadastro_usuarios/pages/dashboard_recipe.html",  context={
+        "search": False,
+        "type_screen": "Register",
+        "form": form
+
+    })

@@ -5,8 +5,29 @@
 {% block content %}
 
   <div class="form-content icon center">
-    <h2>Dashboard({{ request.user }})</h2>
+    <h2>Dashboard({{ request.user.username }})</h2>
     {% include "app_cadastro_usuarios/partials/login_message.html" %}
+
+    <div class="authors-dashboard-container">
+      <h3>Your recipes</h3>
+      
+      <ul>
+        {% for recipe in recipes %}
+          
+          <li>
+            <a href="{% url "cadastro:dashboard_recipe_edit" recipe.id %}">{{recipe.title}}</a>
+          </li>
+
+        {% empty %}
+          <li>
+            <p>Your do not have, recipes, please create one.</p>
+          </li>        
+
+        {% endfor %}
+      </ul>
+
+    </div>
+    
   </div>
 
 {% endblock content %}
