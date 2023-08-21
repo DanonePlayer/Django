@@ -11,7 +11,7 @@
     {% csrf_token %}
     <div class="{% if type_screen == "Register" %} form-content-entry form-content-grid {% else %} form-entry {% endif %}">
       {% for field in form %}
-        <div class="form-group {% if type_screen == "Login" %} center-form-login {% endif %}">
+        <div class="form-group {% if type_screen == "Login" %} center-form-login {% endif %} {{ field.field.widget.attrs.class }}">
           <label for="{{ field.id_for_label }}">{{ field.label }}</label>
           {{field}}
 
@@ -21,6 +21,13 @@
 
           {{ field.errors }}
         </div>
+        
+        {% if field.name == "cover" and field.value.url %}
+          <div class="span-2">
+            <img src="{{ field.value.url }}" alt="Capa para  {{ recipe.title }}">
+          </div>
+        {% endif %}
+
       {% endfor %}
     </div>
 

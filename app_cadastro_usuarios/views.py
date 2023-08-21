@@ -107,7 +107,7 @@ def dashboard_recipe_edit(request, id):
         author=request.user,
         pk=id,
 
-    ).filter()
+    ).first()
 
     if not recipe:
         raise Http404()

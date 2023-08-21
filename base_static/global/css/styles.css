@@ -64,6 +64,14 @@ h1,h2,h3,h4,h5,h6{
 font-family: var(--font-headings);
 }
 
+img {
+max-width: 100%;
+}
+
+a{
+color: var(--color-primary);
+text-decoration: none;
+}
 .container{
 max-width: 144rem;
 margin: 0 auto;
@@ -340,7 +348,9 @@ margin: 0 auto;
 margin-bottom: var(--spacing-gutter-medium);
 }
 
-.form-content-entry input{
+.form-content-entry input,
+.form-content-entry textarea,
+.form-content-entry select{
 width: 100%;
 padding: 1rem;
 border-radius: .4rem;
@@ -402,6 +412,10 @@ font-size: 1.6rem;
 .inline-form{
 display: inline;
 
+}
+
+.span-2 {
+grid-column: span 2;
 }
 
 /* Messages */
