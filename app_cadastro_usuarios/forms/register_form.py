@@ -64,13 +64,6 @@ class RegisterForm(forms.ModelForm):
                 "placeholder": "Digite sua senha aqui",
             }),
         }
-    
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        users = User.objects.filter(email=email).exists()
-        if users:
-            raise ValidationError("Este email ja existe", code="invalid")
-        return email
 
     def clean(self):#valida todo o formulario
         self._errors_recipe_form = defaultdict(list)
