@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from django import forms
+from django.core.exceptions import ValidationError
 
 from recipes.models import Recipe
 
@@ -48,4 +49,15 @@ class AuthorRecipeForm(forms.ModelForm):
             )
         }
 
-    
+    def clean(self):#valida todo o formulario
+        self._errors_recipe_form = defaultdict(list)
+        cleaned_data = super().clean()
+
+        title = cleaned_data.get("title")
+
+        if len(title) < 5:
+            self._errors_recipe_form["title"].append("Seu titulo tem menos de 5 caracteres")
+
+
+        if self._errors_recipe_form:
+            raise ValidationError(self._errors_recipe_form)

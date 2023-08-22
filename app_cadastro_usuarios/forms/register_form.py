@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 
 from django import forms
 from django.contrib.auth.models import User
@@ -64,14 +65,6 @@ class RegisterForm(forms.ModelForm):
             }),
         }
     
-    def clean_username(self):#validaespecifico do campo
-        regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
-        username = self.cleaned_data.get("username")
-
-        if not regex.match(username):
-            raise ValidationError("Seu user contem menos de 8 caracteres", code="invalid")
-        return username
-    
     def clean_email(self):
         email = self.cleaned_data.get("email")
         users = User.objects.filter(email=email).exists()
@@ -80,7 +73,10 @@ class RegisterForm(forms.ModelForm):
         return email
 
     def clean(self):#valida todo o formulario
+        self._errors_recipe_form = defaultdict(list)
         cleaned_data = super().clean()
+        username = cleaned_data.get("username")
+        email = cleaned_data.get("email")
         password = cleaned_data.get("password")
         regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
         password2 = cleaned_data.get("password2")
@@ -88,18 +84,22 @@ class RegisterForm(forms.ModelForm):
 
         if first_name is not None and password is not None:
             if first_name in password:
-                raise ValidationError({
-                    "password": "Sua senha não pode ser igual ao seu nome",
-                })
+                self._errors_recipe_form["password"].append("Sua senha não pode ser igual ao seu nome")
 
         if password != password2:
-            raise ValidationError({
-                "password": "Erro, suas senhas não coicidem",
-                "password2": "Erro, suas senhas não coicidem"
-
-            })
+            self._errors_recipe_form["password"].append("Erro, suas senhas não coicidem")
+            self._errors_recipe_form["password2"].append("Erro, suas senhas não coicidem")
         
         if not regex.match(password):
-            raise ValidationError({
-                "password": "Sua senha contem menos de 8 caracteres"
-            })
+            self._errors_recipe_form["password2"].append("Sua senha contem menos de 8 caracteres")
+            self._errors_recipe_form["password"].append("Sua senha contem menos de 8 caracteres")
+
+        if not regex.match(username):
+            self._errors_recipe_form["username"].append("Seu user contem menos de 8 caracteres")
+
+        users = User.objects.filter(email=email).exists()
+        if users:
+            self._errors_recipe_form["email"].append("Este email ja existe")
+
+        if self._errors_recipe_form:
+            raise ValidationError(self._errors_recipe_form)
