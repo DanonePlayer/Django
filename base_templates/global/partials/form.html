@@ -1,5 +1,5 @@
 <div class=" {% if type_screen == "Register" %} main-content-forms-register {% else %} main-content-forms-login {% endif %} container">
-  <form action="{{ form_action }}" method="POST" class="formulario-cadastro">
+  <form  class="formulario-cadastro" action="{{ form_action }}" method="POST" enctype="multipart/form-data">
     {% if type_screen == "Register" or type_screen == "Login" %} 
     <div class="form-content icon center">
       <h1>

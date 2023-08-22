@@ -2,7 +2,8 @@
 <div>
   Você está logado
   {{ request.user.username }}
-  <a href="{% url 'cadastro:dashboard' %}"> Veja suas receitas</a> ou
+  <a href="{% url 'cadastro:dashboard' %}"> Veja suas receitas</a>,
+  <a href="{% url 'cadastro:dashboard_recipe_create_new' %}"> Crie uma receita </a> ou
   <form class="inline-form" action="{% url 'cadastro:logout' %}" method="POST">
     {% csrf_token %}
     <input type="hidden" name="username" value="{{request.user.username}}">
