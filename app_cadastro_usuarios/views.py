@@ -85,7 +85,8 @@ def logout_view(request):
 
     logout(request)
     return redirect(reverse("cadastro:login"))
-    
+
+
 @login_required(login_url="cadastro:login", redirect_field_name="next")
 def dashboard(request):
     recipes = Recipe.objects.filter(
@@ -168,3 +169,30 @@ def dashboard_recipe_edit(request, id):
         "form": form
 
     })
+
+
+
+
+@login_required(login_url="cadastro:login", redirect_field_name="next")
+def dashboard_recipe_delete(request):
+
+    if not request.POST:
+        raise Http404()
+
+    POST = request.POST
+    # print(POST)
+    id = POST.get("id")
+
+    recipe = Recipe.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+
+    ).first()
+
+    if not recipe:
+        raise Http404()
+    
+    recipe.delete()
+    messages.success(request, "Deletado com sucesso")
+    return redirect(reverse("cadastro:dashboard"))

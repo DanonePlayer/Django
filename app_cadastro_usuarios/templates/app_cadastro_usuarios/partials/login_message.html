@@ -1,5 +1,5 @@
 {% if request.user.is_authenticated %}
-<div>
+<div class="login-message">
   Você está logado
   {{ request.user.username }}
   <a href="{% url 'cadastro:dashboard' %}"> Veja suas receitas</a>,

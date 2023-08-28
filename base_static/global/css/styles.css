@@ -145,6 +145,7 @@ color: var(--color-primary);
 padding-top: 0;
 }
 
+
 .main-content-list{
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -343,7 +344,7 @@ margin: var(--spacing-gutter-medium) auto;
 }
 
 .form-content{
-max-width: 64rem;
+max-width: 84rem;
 margin: 0 auto;
 margin-bottom: var(--spacing-gutter-medium);
 }
@@ -470,6 +471,9 @@ color: var(--color-debug-dark);
 }
 
 /* Authors */
+.login-message {
+    margin: 1rem 0;
+  }
 
 .authors-dashboard-container{
 max-width: 64rem;
