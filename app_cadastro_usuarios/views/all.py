@@ -132,48 +132,6 @@ def dashboard_recipe_create_new(request):
 
 
 @login_required(login_url="cadastro:login", redirect_field_name="next")
-def dashboard_recipe_edit(request, id):
-    recipe = Recipe.objects.filter(
-        is_published=False,
-        author=request.user,
-        pk=id,
-
-    ).first()
-
-    if not recipe:
-        raise Http404()
-    
-    form = AuthorRecipeForm(
-        data=request.POST or None,
-        files=request.FILES or None,
-        instance=recipe
-    )
-
-    if form.is_valid():
-        #Agora, o form é válido e eu posso tentar salvar
-        recipe = form.save(commit=False)
-
-        recipe.author = request.user
-
-        recipe.preparation_steps_is_html = False
-        recipe.is_published = False
-        recipe.save()
-
-        messages.success(request, "Sua receita foi salva com sucesso!")
-        return redirect(reverse("cadastro:dashboard_recipe_edit", args=(id, )))
-
-
-    return render(request, "app_cadastro_usuarios/pages/dashboard_recipe.html",  context={
-        "search": False,
-        "type_screen": "Register",
-        "form": form
-
-    })
-
-
-
-
-@login_required(login_url="cadastro:login", redirect_field_name="next")
 def dashboard_recipe_delete(request):
 
     if not request.POST:
@@ -196,3 +154,51 @@ def dashboard_recipe_delete(request):
     recipe.delete()
     messages.success(request, "Deletado com sucesso")
     return redirect(reverse("cadastro:dashboard"))
+
+
+
+
+
+
+
+
+
+
+# @login_required(login_url="cadastro:login", redirect_field_name="next")
+# def dashboard_recipe_edit(request, id):
+#     recipe = Recipe.objects.filter(
+#         is_published=False,
+#         author=request.user,
+#         pk=id,
+
+#     ).first()
+
+#     if not recipe:
+#         raise Http404()
+    
+#     form = AuthorRecipeForm(
+#         data=request.POST or None,
+#         files=request.FILES or None,
+#         instance=recipe
+#     )
+
+#     if form.is_valid():
+#         #Agora, o form é válido e eu posso tentar salvar
+#         recipe = form.save(commit=False)
+
+#         recipe.author = request.user
+
+#         recipe.preparation_steps_is_html = False
+#         recipe.is_published = False
+#         recipe.save()
+
+#         messages.success(request, "Sua receita foi salva com sucesso!")
+#         return redirect(reverse("cadastro:dashboard_recipe_edit", args=(id, )))
+
+
+#     return render(request, "app_cadastro_usuarios/pages/dashboard_recipe.html",  context={
+#         "search": False,
+#         "type_screen": "Register",
+#         "form": form
+
+#     })
