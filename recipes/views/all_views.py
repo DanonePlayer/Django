@@ -6,9 +6,8 @@ from django.http.response import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.urls import reverse
 
+from recipes.models import Recipe
 from Utils.pagination import make_pagination
-
-from .models import Recipe
 
 PER_PAGE = int(os.environ.get("PER_PAGE", 6))
 
