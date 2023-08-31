@@ -1,14 +1,20 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from app_cadastro_usuarios.forms import AuthorRecipeForm
 from recipes.models import Recipe
 
 
-class DashboardRecipe(View):
+@method_decorator(
+    login_required(login_url="cadastro:login", redirect_field_name="next"),
+    name="dispatch"
+)
+class DashboardRecipeEdit(View):
 
     def get_recipe(self, id):
         recipe = None
@@ -33,7 +39,6 @@ class DashboardRecipe(View):
             "form": form
 
         })
-
 
     def get(self, request, id):
         recipe = self.get_recipe(id)
